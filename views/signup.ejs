@@ -7,15 +7,24 @@
 <body>
 		<a href="/">Home</a>
     <h1>Signup</h1>
+		<%- include("components/errors.ejs") %>
     <form action="/signup" method="post">
+				<label for="firstname">First name:</label>
+				<input type="text" name="firstname" id="firstname">
+        <br>
+        <label for="lastname">Last name:</label>
+        <input type="text" name="lastname" id="lastname">
+        <br>
         <label for="email">Email:</label>
         <input type="email" name="email" id="email">
+        <br>
         <br>
         <label for="password">Password:</label>
         <input type="password" name="password" id="password">
         <br>
 				<label for="password2">Confirm Password:</label>
         <input type="password" name="password2" id="password2">
+        <br>
         <br>
         <input type="submit" value="Signup">
     </form>

@@ -8,7 +8,7 @@ CREATE TABLE users (
 	lastname VARCHAR (64),
 	email VARCHAR (256),
 	password VARCHAR (64),
-	membership membership_status
+	membership membership_status DEFAULT 'none'
 );
 
 CREATE TABLE messages (
