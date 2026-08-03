@@ -1,8 +1,7 @@
 const { Pool } = require("pg");
 const path = require("path");
-const process = require("process");
 
-process.loadEnvFile(path.join(__dirname, "../.env"));
+require("process").loadEnvFile(path.join(__dirname, "../.env"));
 
 module.exports = new Pool({
   host: process.env.HOST,

@@ -10,20 +10,20 @@
 		<%- include("components/errors.ejs") %>
     <form action="/signup" method="post">
 				<label for="firstname">First name:</label>
-				<input type="text" name="firstname" id="firstname">
+				<input type="text" name="firstname" id="firstname" required>
         <br>
         <label for="lastname">Last name:</label>
-        <input type="text" name="lastname" id="lastname">
+        <input type="text" name="lastname" id="lastname" required>
         <br>
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email">
+        <input type="email" name="email" id="email" required>
         <br>
         <br>
         <label for="password">Password:</label>
-        <input type="password" name="password" id="password">
+        <input type="password" name="password" id="password" required>
         <br>
 				<label for="password2">Confirm Password:</label>
-        <input type="password" name="password2" id="password2">
+        <input type="password" name="password2" id="password2" required>
         <br>
         <br>
         <input type="submit" value="Signup">

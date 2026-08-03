@@ -1,6 +1,7 @@
 const { body, validationResult, matchedData } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/users.js");
+const passport = require("passport");
 const router = require("express").Router();
 
 const validateSignup = [
@@ -37,6 +38,23 @@ const validateSignup = [
     .withMessage("Passwords must match"),
 ];
 
+router.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+});
+
+router.get("/signup", (_, res) => {
+  res.render("signup");
+});
+
+router.get("/login", (req, res) => {
+  res.render("login", {
+    errorMessages: req.session.messages,
+  });
+});
+
 router.post("/signup", validateSignup, async (req, res) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
@@ -57,5 +75,14 @@ router.post("/signup", validateSignup, async (req, res) => {
 
   res.redirect("/");
 });
+
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureMessage: true,
+  }),
+);
 
 module.exports = router;

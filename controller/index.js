@@ -2,16 +2,8 @@ const express = require("express");
 
 const router = express.Router();
 
-router.get("/", (_, res) => {
-  res.render("index");
-});
-
-router.get("/signup", (_, res) => {
-  res.render("signup");
-});
-
-router.get("/login", (_, res) => {
-  res.render("login");
+router.get("/", (req, res) => {
+  res.render("index", { user: req.user });
 });
 
 module.exports = router;
