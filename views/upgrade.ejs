@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Join the club</title>
+		<%- include("components/meta.ejs") %>
+</head>
+<body>
+		<a href="/">Home</a>
+		<% if (locals.user && user.membership === "member") { %>
+			<p>You already are a member!<\p>
+		<% } else { %>
+			<h1>Join the club</h1>
+			<%- include("components/errors.ejs") %>
+    	<form action="/upgrade" method="post" id="join-the-club">
+    	    <label for="code">Enter the code:</label>
+    	    <input type="password" name="code" id="code" required>
+    	    <br>
+    	    <input type="submit" value="Join">
+    	</form>
+		<% } %>
+</body>
+</html>

@@ -2,7 +2,7 @@ const pool = require("./pool");
 
 async function getUser(id) {
   const res = await pool.query(
-    `SELECT firstname, lastname, email, membership 
+    `SELECT id, firstname, lastname, email, membership 
 		FROM users WHERE id = $1`,
     [id],
   );
@@ -19,4 +19,13 @@ async function createUser({ firstname, lastname, email, password }) {
   );
 }
 
-module.exports = { createUser, getUser };
+async function upgradeUser(id) {
+  await pool.query(
+    `UPDATE users
+		SET membership = 'member'
+		WHERE id = $1`,
+    [id],
+  );
+}
+
+module.exports = { createUser, getUser, upgradeUser };

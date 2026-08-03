@@ -14,6 +14,7 @@ app.set("view engine", "ejs");
 
 setup_passport();
 
+app.use(express.static(path.join(__dirname, "public")));
 app.use(
   expressSession({
     store: new pgSession({ pool }),

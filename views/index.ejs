@@ -1,19 +1,30 @@
 <html>
 <head>
     <title>Membership Club</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<%- include("components/meta.ejs") %>
 </head>
 <body>
-    <h1>Membership Club</h1>
-		<% if (locals.user) {%>
-			<h1>WELCOME BACK <%= user.firstname %> <%= user.lastname %></h1>
-    	<a href="/logout">LOG OUT</a>
-		<% } else { %>
-			<a href="/signup">Signup</a>
-   		<a href="/login">Login</a>
-		<% } %>
-		<p>THIS IS WHERE THE MESSAGES WILL GO</p>
+		<header>
+			<h1>Membership Club</h1>
+			<% if (locals.user) {%>
+    		<a href="/logout">LOG OUT</a>
+				<% if(user.membership === "basic") { %>
+					<a href="/upgrade">Join the Club</a>
+				<% } %>
+			<% } else { %>
+				<a href="/signup">Signup</a>
+   			<a href="/login">Login</a>
+			<% } %>
+		</header>
+		<main>
+			<% if (locals.user) {%>
+				<h1>WELCOME BACK <%= user.firstname %> <%= user.lastname %></h1>
+				<% if (user.membership === "member") { %>
+					<p><i>You have club membership!</i></p>
+				<% } %>
+			<% } %>
+			<p>THIS IS WHERE THE MESSAGES WILL GO</p>
+		</main>
 </body>
 </html>
 

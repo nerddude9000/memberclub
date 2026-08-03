@@ -38,12 +38,22 @@ const validateSignup = [
     .withMessage("Passwords must match"),
 ];
 
-router.get("/logout", (req, res, next) => {
-  req.logout((err) => {
-    if (err) return next(err);
-    res.redirect("/");
-  });
-});
+const validateUpgrade = [
+  body("code")
+    .trim()
+    .notEmpty()
+    .withMessage("Code is required")
+    .custom((value) => value === process.env.JOIN_CLUB_CODE)
+    .withMessage("That is not the right code."),
+];
+
+const validateAuth = (req, res, next) => {
+  if (!req.user) {
+    return res.redirect("/login");
+  }
+
+  next();
+};
 
 router.get("/signup", (_, res) => {
   res.render("signup");
@@ -53,6 +63,17 @@ router.get("/login", (req, res) => {
   res.render("login", {
     errorMessages: req.session.messages,
   });
+});
+
+router.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+});
+
+router.get("/upgrade", (_, res) => {
+  res.render("upgrade");
 });
 
 router.post("/signup", validateSignup, async (req, res) => {
@@ -84,5 +105,19 @@ router.post(
     failureMessage: true,
   }),
 );
+
+router.post("/upgrade", validateAuth, validateUpgrade, async (req, res) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    res.status(400).render("upgrade", {
+      errors: result.array(),
+    });
+  }
+
+  console.log(req.user);
+  await userModel.upgradeUser(req.user.id);
+
+  res.redirect("/");
+});
 
 module.exports = router;

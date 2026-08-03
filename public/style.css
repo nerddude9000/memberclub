@@ -1,0 +1,36 @@
+body {
+  background-color: #f0f0f0;
+  margin: 0;
+}
+
+header {
+  padding-inline: 1rem;
+  background-color: white;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+header h1 {
+  margin-right: auto;
+}
+
+main {
+  padding: 1rem;
+}
+
+form#join-the-club {
+  max-width: 512px;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+form#join-the-club > * {
+  flex: 1;
+}
+
+form#join-the-club input[type="password"] {
+  flex: 2;
+}
