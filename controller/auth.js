@@ -2,11 +2,7 @@ const { validationResult, matchedData } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/users.js");
 const passport = require("passport");
-const {
-  validateAuth,
-  validateSignup,
-  validateUpgrade,
-} = require("../lib/validators.js");
+const { validateSignup } = require("../lib/validators.js");
 const router = require("express").Router();
 
 router.get("/signup", (_, res) => {
@@ -27,18 +23,10 @@ router.get("/logout", (req, res, next) => {
   });
 });
 
-router.get("/upgrade", validateAuth, (req, res) => {
-  if (req.user.membership === "member") {
-    return res.redirect("/");
-  }
-
-  res.render("upgrade");
-});
-
 router.post("/signup", validateSignup, async (req, res) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
-    res.status(400).render("signup", {
+    return res.status(400).render("signup", {
       errors: result.array(),
     });
   }
@@ -64,19 +52,5 @@ router.post(
     failureMessage: true,
   }),
 );
-
-router.post("/upgrade", validateAuth, validateUpgrade, async (req, res) => {
-  const result = validationResult(req);
-  if (!result.isEmpty()) {
-    res.status(400).render("upgrade", {
-      errors: result.array(),
-    });
-  }
-
-  console.log(req.user);
-  await userModel.upgradeUser(req.user.id);
-
-  res.redirect("/");
-});
 
 module.exports = router;

@@ -29,6 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/", require("./controller/index"));
 app.use("/", require("./controller/auth"));
+app.use("/", require("./controller/users"));
+app.use("/posts", require("./controller/messages"));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (err) => {

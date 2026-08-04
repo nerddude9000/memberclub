@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Create a post</title>
+		<%- include("components/meta.ejs") %>
+</head>
+<body>
+		<a href="/">Home</a>
+    <h1>Create a post</h1>
+		<%- include("components/errors.ejs") %>
+    <form action="/posts/create" method="post">
+				<label for="title">Post title:</label>
+				<input type="text" name="title" id="title" maxlength="96" required>
+        <br>
+        <label for="content">Content:</label>
+        <textarea name="content" id="content" cols="60" rows="30" minlength="4" maxlength="1024" required></textarea>
+        <br>
+        <br>
+        <input type="submit" value="Send">
+    </form>
+		<p><i>Psst! Only members can see who sends this!</i></p>
+</body>
+</html>

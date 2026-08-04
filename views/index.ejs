@@ -4,26 +4,16 @@
 		<%- include("components/meta.ejs") %>
 </head>
 <body>
-		<header>
-			<h1>Membership Club</h1>
-			<% if (locals.user) {%>
-    		<a href="/logout">LOG OUT</a>
-				<% if(user.membership === "basic") { %>
-					<a href="/upgrade">Join the Club</a>
-				<% } %>
-			<% } else { %>
-				<a href="/signup">Signup</a>
-   			<a href="/login">Login</a>
-			<% } %>
-		</header>
+		<%- include("components/header.ejs") %>
 		<main>
 			<% if (locals.user) {%>
 				<h1>WELCOME BACK <%= user.firstname %> <%= user.lastname %></h1>
 				<% if (user.membership === "member") { %>
 					<p><i>You have club membership!</i></p>
 				<% } %>
+			<% } else { %>
+				<h1>Please login to access club features.</h1>
 			<% } %>
-			<p>THIS IS WHERE THE MESSAGES WILL GO</p>
 		</main>
 </body>
 </html>

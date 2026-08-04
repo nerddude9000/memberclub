@@ -42,16 +42,19 @@ async function getOneMessageWithAuthor(id) {
 }
 
 async function createMessage(user_id, title, content) {
-  await pool.query(
+  const res = await pool.query(
     `INSERT INTO messages (user_id, title, content)
-		VALUES ($1, $2, $3)`,
+		VALUES ($1, $2, $3)
+		RETURNING *`,
     [user_id, title, content],
   );
+
+  return res.rows[0];
 }
 
 module.exports = {
   getAllMessages,
-  getOneMessageWithAuthor,
+  getAllMessagesWithAuthor,
   getOneMessage,
   getOneMessageWithAuthor,
   createMessage,

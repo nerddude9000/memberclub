@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Membership Club</title>
+		<%- include("components/meta.ejs") %>
+</head>
+<body>
+		<%- include("components/header.ejs") %>
+		<main>
+			<h1>WELCOME BACK <%= user.firstname %> <%= user.lastname %></h1>
+			<h1>Club posts</h1>
+
+			<div id="messages">
+			<% messages.forEach((message) => { %>
+				<article class="message-card">
+					<h2><%= message.title %></h2>
+					<p><%= message.content %></h2>
+					<% if(message.firstname && message.lastname) { %>
+						<p><i><%= message.firstname %> <%= message.lastname %></i></p>
+					<% } else { %>
+						<p><b>[REDACTED]</b></p>
+					<% } %>
+				</article>
+			<% }) %>
+			</div>
+		</main>
+</body>
+</html>
+

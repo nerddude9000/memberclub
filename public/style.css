@@ -34,3 +34,22 @@ form#join-the-club > * {
 form#join-the-club input[type="password"] {
   flex: 2;
 }
+
+#messages {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.message-card {
+  background-color: white;
+  padding-inline: 2rem;
+
+  h2 {
+    text-transform: uppercase;
+  }
+
+  p {
+    font-family: sans-serif;
+  }
+}
