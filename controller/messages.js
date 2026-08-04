@@ -2,8 +2,6 @@ const { validationResult, matchedData } = require("express-validator");
 const { validateAuth, validateMessage } = require("../lib/validators");
 const {
   createMessage,
-  getOneMessage,
-  getOneMessageWithAuthor,
   getAllMessagesWithAuthor,
   getAllMessages,
 } = require("../models/messages");
@@ -17,16 +15,6 @@ router.get("/", validateAuth, async (req, res) => {
       : await getAllMessages();
 
   res.render("view-messages", { messages });
-});
-
-router.get("/:id", validateAuth, async (req, res) => {
-  const id = req.params.id;
-  const message =
-    req.user.membership === "member"
-      ? await getOneMessageWithAuthor(id)
-      : await getOneMessage(id);
-
-  res.render("view-single-message", { message });
 });
 
 router.get("/create", validateAuth, (_, res) => {

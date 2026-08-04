@@ -51,5 +51,12 @@ form#join-the-club input[type="password"] {
 
   p {
     font-family: sans-serif;
+    white-space: pre-wrap;
   }
+}
+
+.message-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

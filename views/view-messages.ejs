@@ -8,17 +8,24 @@
 		<main>
 			<h1>WELCOME BACK <%= user.firstname %> <%= user.lastname %></h1>
 			<h1>Club posts</h1>
+			<a href="/posts/create">Create a post</a>
 
 			<div id="messages">
 			<% messages.forEach((message) => { %>
 				<article class="message-card">
 					<h2><%= message.title %></h2>
 					<p><%= message.content %></h2>
-					<% if(message.firstname && message.lastname) { %>
-						<p><i><%= message.firstname %> <%= message.lastname %></i></p>
-					<% } else { %>
-						<p><b>[REDACTED]</b></p>
-					<% } %>
+					<div class="message-meta">
+						<% if(message.firstname && message.lastname) { %>
+							<p>Written by <i><%= message.firstname %> <%= message.lastname %></i></p>
+						<% } else { %>
+							<p><b>[REDACTED]</b></p>
+						<% } %>
+
+						<% if(message.created_at) { %>
+							<p><%= message.created_at %></p>
+						<% } %>
+					</div>
 				</article>
 			<% }) %>
 			</div>

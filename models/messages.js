@@ -1,9 +1,7 @@
 const pool = require("./pool");
 
 async function getAllMessages() {
-  const res = await pool.query(
-    "SELECT id, title, content, created_at FROM messages",
-  );
+  const res = await pool.query("SELECT id, title, content FROM messages");
 
   return res.rows;
 }
