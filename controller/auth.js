@@ -1,59 +1,13 @@
-const { body, validationResult, matchedData } = require("express-validator");
+const { validationResult, matchedData } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/users.js");
 const passport = require("passport");
+const {
+  validateAuth,
+  validateSignup,
+  validateUpgrade,
+} = require("../lib/validators.js");
 const router = require("express").Router();
-
-const validateSignup = [
-  body("firstname")
-    .trim()
-    .notEmpty()
-    .withMessage("First name is required")
-    .isAlpha()
-    .withMessage("Invalid first name")
-    .isLength({ min: 2, max: 64 })
-    .withMessage("First name must be between 8 and 64 characters"),
-  body("lastname")
-    .trim()
-    .notEmpty()
-    .withMessage("Last name is required")
-    .isAlpha()
-    .withMessage("Invalid last name")
-    .isLength({ min: 2, max: 64 })
-    .withMessage("Last name must be between 8 and 64 characters"),
-  body("email")
-    .trim()
-    .notEmpty()
-    .withMessage("Email is required")
-    .isEmail()
-    .withMessage("Email must be valid"),
-  body("password")
-    .trim()
-    .notEmpty()
-    .withMessage("Password is required")
-    .isLength({ min: 8, max: 64 })
-    .withMessage("Password must be between 8 and 64 characters"),
-  body("password2")
-    .custom((value, { req }) => value === req.body.password)
-    .withMessage("Passwords must match"),
-];
-
-const validateUpgrade = [
-  body("code")
-    .trim()
-    .notEmpty()
-    .withMessage("Code is required")
-    .custom((value) => value === process.env.JOIN_CLUB_CODE)
-    .withMessage("That is not the right code."),
-];
-
-const validateAuth = (req, res, next) => {
-  if (!req.user) {
-    return res.redirect("/login");
-  }
-
-  next();
-};
 
 router.get("/signup", (_, res) => {
   res.render("signup");
@@ -68,11 +22,16 @@ router.get("/login", (req, res) => {
 router.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
+
     res.redirect("/");
   });
 });
 
-router.get("/upgrade", (_, res) => {
+router.get("/upgrade", validateAuth, (req, res) => {
+  if (req.user.membership === "member") {
+    return res.redirect("/");
+  }
+
   res.render("upgrade");
 });
 
