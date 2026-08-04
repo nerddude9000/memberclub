@@ -1,6 +1,6 @@
 -- NOTE: we could have used a boolean, but this enables adding other statuses easily,
 -- such as: member+, member++, member_extra_premium_money_milking_tier
-CREATE TYPE membership_status AS ENUM ('basic', 'member');
+CREATE TYPE membership_status AS ENUM ('basic', 'member', 'admin');
 
 CREATE TABLE users (
 	id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,

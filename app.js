@@ -26,6 +26,10 @@ app.use(
 );
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
 
 app.use("/", require("./controller/index"));
 app.use("/", require("./controller/auth"));

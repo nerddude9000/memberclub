@@ -4,13 +4,14 @@ const {
   createMessage,
   getAllMessagesWithAuthor,
   getAllMessages,
+  deleteMessage,
 } = require("../models/messages");
 
 const router = require("express").Router();
 
 router.get("/", async (req, res) => {
   const messages =
-    req.user && req.user.membership === "member"
+    req.user && ["member", "admin"].includes(req.user.membership)
       ? await getAllMessagesWithAuthor()
       : await getAllMessages();
 
@@ -33,6 +34,15 @@ router.post("/create", validateAuth, validateMessage, async (req, res) => {
   const user_id = req.user.id;
 
   await createMessage(user_id, title, content);
+  res.redirect(req.baseUrl);
+});
+
+router.post("/delete/:id", validateAuth, async (req, res) => {
+  if (req.user.membership !== "admin") {
+    return res.status(403).send("You are not authorized to delete messages.");
+  }
+
+  await deleteMessage(req.params.id);
 
   res.redirect(req.baseUrl);
 });
