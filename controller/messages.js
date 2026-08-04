@@ -8,9 +8,9 @@ const {
 
 const router = require("express").Router();
 
-router.get("/", validateAuth, async (req, res) => {
+router.get("/", async (req, res) => {
   const messages =
-    req.user.membership === "member"
+    req.user && req.user.membership === "member"
       ? await getAllMessagesWithAuthor()
       : await getAllMessages();
 

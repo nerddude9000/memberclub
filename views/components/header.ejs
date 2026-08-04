@@ -2,8 +2,8 @@
 	<h1>Membership Club</h1>
 
 	<a href="/">Home</a>
+	<a href="/posts">Posts</a>
 	<% if (locals.user) {%>
-		<a href="/posts">Posts</a>
   	<a href="/logout">LOG OUT</a>
 		<% if(user.membership === "basic") { %>
 			<a href="/upgrade">Join the Club</a>
