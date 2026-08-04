@@ -1,7 +1,9 @@
 const pool = require("./pool");
 
 async function getAllMessages() {
-  const res = await pool.query("SELECT id, title, content FROM messages");
+  const res = await pool.query(
+    "SELECT id, title, content FROM messages ORDER BY created_at DESC",
+  );
 
   return res.rows;
 }
@@ -11,7 +13,8 @@ async function getAllMessagesWithAuthor() {
     `SELECT m.id, m.title, m.content, m.created_at, u.firstname, u.lastname
 		FROM messages as m
 		JOIN users as u
-		ON m.user_id = u.id`,
+		ON m.user_id = u.id
+		ORDER BY m.created_at DESC`,
   );
 
   return res.rows;
@@ -50,10 +53,15 @@ async function createMessage(user_id, title, content) {
   return res.rows[0];
 }
 
+async function deleteMessage(id) {
+  await pool.query("DELETE FROM messages WHERE id = $1", [id]);
+}
+
 module.exports = {
   getAllMessages,
   getAllMessagesWithAuthor,
   getOneMessage,
   getOneMessageWithAuthor,
   createMessage,
+  deleteMessage,
 };
